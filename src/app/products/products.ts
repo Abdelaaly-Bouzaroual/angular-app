@@ -26,14 +26,19 @@ this.getAllProducts();
 
 
   getAllProducts(){
-   this.products = this.productService.getAllProducts();
+   this.productService.getAllProducts().subscribe({
+    next : resp =>{this.products = resp},
+    error : err => { console.log(err)}
+   });
   }
 
   handleDelete(product : any): void {
     let v = confirm('are u sur that u want to delete ')
     if(v==true){
-        this.productService.deleteProducts(product);
-        this.getAllProducts();
+        this.productService.deleteProducts(product).subscribe({
+          next :value => {this.getAllProducts();},
+          error : err => {console.log(err)}
+        });
     }
   }
 }

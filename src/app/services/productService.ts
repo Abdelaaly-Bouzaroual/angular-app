@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { booleanAttribute, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +15,22 @@ export class ProductService {
     {id:5, name : "smart tv ", price:6321, selected:false}
   ]
 
-  constructor() { }
+  constructor(private http : HttpClient) { }
 
-  getAllProducts(){
-    return this.products
+  // getAllProducts(){
+  //   return this.products
+  // }
+
+  // deleteProducts(product : any){
+  //   console.log("deleteMethode **************************")
+  //   this.products = this.products.filter((p : any):boolean => p.id != product.id)
+  // }
+
+    getAllProducts() : Observable<any>{
+      // console.log(this.http.get("http://localhost:8083/index"))
+    return this.http.get("http://localhost:8083/products")
   }
-
-  deleteProducts(product : any){
-    console.log("deleteMethode **************************")
-    this.products = this.products.filter((p : any):boolean => p.id != product.id)
+    deleteProducts( product : any) : Observable<any>{
+    return this.http.delete("http://localhost:8083/products/" + product.id)
   }
 }
